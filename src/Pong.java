@@ -6,46 +6,45 @@ import java.awt.event.KeyListener;
 /**
  * Created by Vitalii on 18.05.2017.
  */
-public class Pong extends Applet implements Runnable, KeyListener{
-    final int WIDTH =700, HEIGHT = 500;
-    String font = "PressStart2P.ttf";
+public class Pong extends Applet implements Runnable, KeyListener, GameConstants{
+
     private boolean gameStarted;
     Thread thread;
-    HumanPaddle p1;
-    AIPaddle p2;
+    HumanPaddle player1;
+    AIPaddle player2;
     Ball ball;
 
     public void init(){
-        this.resize(WIDTH,HEIGHT);
+        this.resize(GAME_WIDTH,GAME_HEIGHT);
         this.addKeyListener(this);
         gameStarted = false;
         ball = new Ball();
-        p1= new HumanPaddle(1);
-        p2 = new AIPaddle(2,ball);
+        player1 = new HumanPaddle(1);
+        player2 = new AIPaddle(2,ball);
         thread = new Thread(this);
         thread.start();
     }
     public void paint(Graphics g){
         g.setColor(Color.black);
-        g.fillRect(0,0,WIDTH,HEIGHT);
-        if (ball.getX()< -10 || ball.getX() > 710){
+        g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        if (ball.getX()< -BALL_RADIUS || ball.getX() > GAME_WIDTH+BALL_RADIUS){
             g.setColor(Color.red);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
             gameStarted = false;
-            ball.setX(350);
-            g.drawString("Game Over", 300,250);
+            ball.setX(GAME_HEIGHT/2);
+            g.drawString("Game Over", GAME_WIDTH/2,250);
         }
         else{
-            p1.draw(g);
+            player1.draw(g);
             ball.draw(g);
-            p2.draw(g);
+            player2.draw(g);
         }
 
         if (!gameStarted){
             g.setColor(Color.white);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
-            g.drawString("Tennis", 320,100);
-            g.drawString("Press Enter to Begin", 260,130);
+            g.drawString("Tennis", (GAME_WIDTH/2),100);
+            g.drawString("Press Enter to Begin", (GAME_WIDTH/2),130);
         }
     }
     public void update(Graphics g){
@@ -56,10 +55,10 @@ public class Pong extends Applet implements Runnable, KeyListener{
     public void run() {
         while(true){
             if (gameStarted){
-                p1.move();
-                p2.move();
+                player1.move();
+                player2.move();
                 ball.move();
-                ball.checkPaddleCollision(p1,p2);
+                ball.checkPaddleCollision(player1, player2);
                 repaint();
             }
             try {
@@ -78,10 +77,10 @@ public class Pong extends Applet implements Runnable, KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode()== KeyEvent.VK_UP){
-            p1.setUpAccel(true);
+            player1.setUpAccel(true);
         }
         else if(e.getKeyCode()== KeyEvent.VK_DOWN){
-            p1.setDownAccel(true);
+            player1.setDownAccel(true);
         }
         else if (e.getKeyCode()== KeyEvent.VK_ENTER){
             gameStarted = true;
@@ -91,10 +90,10 @@ public class Pong extends Applet implements Runnable, KeyListener{
     @Override
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode()== KeyEvent.VK_UP){
-            p1.setUpAccel(false);
+            player1.setUpAccel(false);
         }
         else if(e.getKeyCode()== KeyEvent.VK_DOWN){
-            p1.setDownAccel(false);
+            player1.setDownAccel(false);
         }
     }
 }

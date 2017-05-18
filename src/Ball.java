@@ -3,29 +3,43 @@ import java.awt.*;
 /**
  * Created by Vitalii on 18.05.2017.
  */
-public class Ball {
+public class Ball implements GameConstants {
     double xVel, yVel, x, y;
 
     public Ball(){
-        x=350;
-        y=250;
-        xVel = -2;
-        yVel =0.5;
+        x=GAME_WIDTH/2;
+        y=GAME_HEIGHT/2;
+        xVel = getRandomDirection()*getRandomSpeed();
+        yVel = getRandomDirection()*getRandomSpeed();
+    }
+
+    public double getRandomSpeed(){
+        return (Math.random()*3 +2);
+    }
+    public int getRandomDirection(){
+        int rand = (int)(Math.random()*2);
+        if (rand==1){
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public void draw (Graphics g){
         g.setColor(Color.white);
-        g.fillOval((int)x-10,(int)y-10,20,20);
+        g.fillOval((int)x-BALL_RADIUS/2,(int)y-BALL_RADIUS/2,BALL_RADIUS,BALL_RADIUS);
     }
 
     public void checkPaddleCollision(Paddle p1, Paddle p2){
-        if (x <= 50){
-            if (y >= p1.getY() && y<= p1.getY()+80){
+        if (x <= PADDLE_WIDTH*2+BALL_RADIUS/2){
+            if (y >= p1.getY() && y<= p1.getY()+PADDLE_HEIGHT){
                 xVel = -xVel;
             }
         }
-        else if (x>=650){
-            if (y >= p2.getY() && y<= p2.getY()+80){
+        else if (x>=GAME_WIDTH-PADDLE_WIDTH*2-BALL_RADIUS/2){
+            if (y >= p2.getY() && y<= p2.getY()+PADDLE_HEIGHT){
                 xVel = -xVel;
             }
         }
@@ -35,7 +49,7 @@ public class Ball {
         x += xVel;
         y += yVel;
 
-        if(y < 10 || y > 490)
+        if(y < BALL_RADIUS || y > GAME_HEIGHT-BALL_RADIUS)
             yVel = -yVel;
 
     }

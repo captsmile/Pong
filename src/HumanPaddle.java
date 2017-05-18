@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * Created by Vitalii on 18.05.2017.
  */
-public class HumanPaddle implements Paddle {
+public class HumanPaddle implements Paddle, GameConstants {
     double y, yVel;
     boolean upAccel, downAccel;
     int player, x;
@@ -12,17 +12,17 @@ public class HumanPaddle implements Paddle {
     public HumanPaddle(int player){
         this.player = player;
         upAccel = false; downAccel = false;
-        y=210; yVel=0;
+        y=GAME_HEIGHT/2-PADDLE_HEIGHT/2; yVel=0;
         if(player ==1)
-            x=20;
+            x=PADDLE_WIDTH;
         else
-            x=660;
+            x=GAME_WIDTH-PADDLE_WIDTH*2;
     }
 
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(x,(int)y,20,80);
+        g.fillRect(x,(int)y,PADDLE_WIDTH,PADDLE_HEIGHT);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class HumanPaddle implements Paddle {
 
         if (y<0)
             y=0;
-        if (y>420)
-            y=420;
+        if (y>GAME_HEIGHT-PADDLE_HEIGHT)
+            y=GAME_HEIGHT-PADDLE_HEIGHT;
 
     }
 

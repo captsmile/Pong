@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * Created by Vitalii on 18.05.2017.
  */
-public class AIPaddle implements Paddle {
+public class AIPaddle implements Paddle,GameConstants {
     double y, yVel;
     boolean upAccel, downAccel;
     int player, x;
@@ -14,11 +14,11 @@ public class AIPaddle implements Paddle {
         this.player = player;
         this.ball = b;
         upAccel = false; downAccel = false;
-        y=210; yVel=0;
+        y=GAME_HEIGHT/2-PADDLE_HEIGHT/2; yVel=0;
         if(player ==1)
-            x=20;
+            x=PADDLE_WIDTH;
         else
-            x=660;
+            x=GAME_WIDTH-PADDLE_WIDTH*2;
     }
 
     @Override
