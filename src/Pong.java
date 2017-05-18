@@ -14,8 +14,8 @@ public class Pong extends Applet implements Runnable, KeyListener{
     public void init(){
         this.resize(WIDTH,HEIGHT);
         this.addKeyListener(this);
-        p1= new HumanPaddle(2);
-        Thread thread = new Thread(this);
+        p1= new HumanPaddle(1);
+        thread = new Thread(this);
         thread.start();
     }
     public void paint(Graphics g){
