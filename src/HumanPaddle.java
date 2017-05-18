@@ -8,6 +8,8 @@ public class HumanPaddle implements Paddle, GameConstants {
     boolean upAccel, downAccel;
     int player, x;
     final double GRAVITY = 0.94;
+    int score = 0;
+
 
     public HumanPaddle(int player){
         this.player = player;
@@ -23,6 +25,16 @@ public class HumanPaddle implements Paddle, GameConstants {
     public void draw(Graphics g) {
         g.setColor(Color.white);
         g.fillRect(x,(int)y,PADDLE_WIDTH,PADDLE_HEIGHT);
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void setScore() {
+        score++;
     }
 
     @Override

@@ -7,8 +7,14 @@ public class AIPaddle implements Paddle,GameConstants {
     double y, yVel;
     boolean upAccel, downAccel;
     int player, x;
+    int score = 0;
+
+
+    public void setBall(Ball ball) {
+        this.ball = ball;
+    }
+
     Ball ball;
-    final double GRAVITY = 0.94;
 
     public AIPaddle(int player, Ball b){
         this.player = player;
@@ -24,30 +30,30 @@ public class AIPaddle implements Paddle,GameConstants {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(x,(int)y,20,80);
+        g.fillRect(x,(int)y,PADDLE_WIDTH,PADDLE_HEIGHT);
     }
 
     @Override
     public void move() {
-        y = ball.getY() - 40;
-
+        y = ball.getY() - PADDLE_HEIGHT / 2;
         if (y<0)
             y=0;
-        if (y>420)
-            y=420;
+        if (y>GAME_HEIGHT-PADDLE_HEIGHT)
+            y=GAME_HEIGHT-PADDLE_HEIGHT;
 
-    }
-
-    public void setUpAccel(boolean input){
-        upAccel = input;
-    }
-
-    public void setDownAccel(boolean input){
-        downAccel = input;
     }
 
     @Override
     public int getY() {
         return (int)y;
+    }
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void setScore() {
+        score++;
     }
 }

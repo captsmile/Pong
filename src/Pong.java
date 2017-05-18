@@ -25,13 +25,17 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
         thread.start();
     }
     public void paint(Graphics g){
+        Paddle checkPaddle;
         g.setColor(Color.black);
         g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
-        if (ball.getX()< -BALL_RADIUS || ball.getX() > GAME_WIDTH+BALL_RADIUS){
+        checkPaddle = ball.checkPaddleCollision(player1, player2);
+        if (checkPaddle != null){
+            checkPaddle.setScore();
             g.setColor(Color.red);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
             gameStarted = false;
-            ball.setX(GAME_HEIGHT/2);
+            ball = new Ball();
+            player2.setBall(ball);
             g.drawString("Game Over", GAME_WIDTH/2,250);
         }
         else{
@@ -39,13 +43,16 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
             ball.draw(g);
             player2.draw(g);
         }
-
         if (!gameStarted){
             g.setColor(Color.white);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
             g.drawString("Tennis", (GAME_WIDTH/2),100);
             g.drawString("Press Enter to Begin", (GAME_WIDTH/2),130);
         }
+        g.setColor(Color.red);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
+        g.drawString(String.valueOf(player1.getScore()), 50,50);
+        g.drawString(String.valueOf(player2.getScore()), GAME_WIDTH-80,50);
     }
     public void update(Graphics g){
         paint(g);
@@ -58,7 +65,6 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
                 player1.move();
                 player2.move();
                 ball.move();
-                ball.checkPaddleCollision(player1, player2);
                 repaint();
             }
             try {

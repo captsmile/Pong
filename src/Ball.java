@@ -14,16 +14,17 @@ public class Ball implements GameConstants {
     }
 
     public double getRandomSpeed(){
-        return (Math.random()*3 +2);
+        return (Math.random()*4 +1);
     }
+
     public int getRandomDirection(){
-        int rand = (int)(Math.random()*2);
-        if (rand==1){
-            return 1;
+        double rand = (Math.random()*2-1);
+        if (rand<=0){
+            return -1;
         }
         else
         {
-            return -1;
+            return 1;
         }
     }
 
@@ -32,17 +33,24 @@ public class Ball implements GameConstants {
         g.fillOval((int)x-BALL_RADIUS/2,(int)y-BALL_RADIUS/2,BALL_RADIUS,BALL_RADIUS);
     }
 
-    public void checkPaddleCollision(Paddle p1, Paddle p2){
+    public Paddle checkPaddleCollision(Paddle p1, Paddle p2){
         if (x <= PADDLE_WIDTH*2+BALL_RADIUS/2){
             if (y >= p1.getY() && y<= p1.getY()+PADDLE_HEIGHT){
                 xVel = -xVel;
             }
+            else {
+                return p1;
+            }
         }
-        else if (x>=GAME_WIDTH-PADDLE_WIDTH*2-BALL_RADIUS/2){
+        else if (x >= GAME_WIDTH-PADDLE_WIDTH*2-BALL_RADIUS/2){
             if (y >= p2.getY() && y<= p2.getY()+PADDLE_HEIGHT){
                 xVel = -xVel;
             }
+            else {
+                return p2;
+            }
         }
+        return null;
     }
 
     public void move(){
