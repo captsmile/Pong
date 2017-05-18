@@ -3,14 +3,16 @@ import java.awt.*;
 /**
  * Created by Vitalii on 18.05.2017.
  */
-public class HumanPaddle implements Paddle {
+public class AIPaddle implements Paddle {
     double y, yVel;
     boolean upAccel, downAccel;
     int player, x;
+    Ball ball;
     final double GRAVITY = 0.94;
 
-    public HumanPaddle(int player){
+    public AIPaddle(int player, Ball b){
         this.player = player;
+        this.ball = b;
         upAccel = false; downAccel = false;
         y=210; yVel=0;
         if(player ==1)
@@ -27,22 +29,7 @@ public class HumanPaddle implements Paddle {
 
     @Override
     public void move() {
-        if(upAccel){
-            yVel -= 2;
-        }
-        else if (downAccel){
-            yVel += 2;
-        }
-        else if (!upAccel && !downAccel){
-            yVel *= GRAVITY;
-        }
-
-        if(yVel >= 5)
-            yVel = 5;
-        else if (yVel <= -5)
-            yVel = -5;
-
-        y += yVel;
+        y = ball.getY() - 40;
 
         if (y<0)
             y=0;
