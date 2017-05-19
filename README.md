@@ -7,3 +7,4 @@ Key control:
 
 2-nd player: UP, DOWN
 
+![image](https://github.com/captsmile/Pong/blob/master/PingPong.png) 
