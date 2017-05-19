@@ -22,7 +22,6 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.err.println(e.getSource());
         if (e.getSource() == btn1) {
             player2 = new AIPaddle(2, ball);
         } else {
@@ -113,7 +112,6 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("pres");
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             player1.setUpAccel(true);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
