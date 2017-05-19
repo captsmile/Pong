@@ -9,10 +9,16 @@ public class HumanPaddle implements Paddle, GameConstants {
     int player, x;
     final double GRAVITY = 0.94;
     int score = 0;
+    Ball ball;
 
+    @Override
+    public void setBall(Ball ball) {
+        this.ball = ball;
+    }
 
-    public HumanPaddle(int player){
+    public HumanPaddle(int player, Ball b){
         this.player = player;
+        this.ball = b;
         upAccel = false; downAccel = false;
         y=GAME_HEIGHT/2-PADDLE_HEIGHT/2; yVel=0;
         if(player ==1)

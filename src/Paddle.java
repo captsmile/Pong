@@ -9,4 +9,7 @@ public interface Paddle {
     public int getY();
     public int getScore();
     public void incrementScore();
+    public void setUpAccel(boolean input);
+    public void setDownAccel(boolean input);
+    public void setBall(Ball ball);
 }

@@ -44,6 +44,16 @@ public class AIPaddle implements Paddle,GameConstants {
     }
 
     @Override
+    public void setUpAccel(boolean input) {
+
+    }
+
+    @Override
+    public void setDownAccel(boolean input) {
+
+    }
+
+    @Override
     public int getY() {
         return (int)y;
     }
