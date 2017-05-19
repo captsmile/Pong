@@ -53,7 +53,7 @@ public class AIPaddle implements Paddle,GameConstants {
     }
 
     @Override
-    public void setScore() {
+    public void incrementScore() {
         score++;
     }
 }

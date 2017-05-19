@@ -8,5 +8,5 @@ public interface Paddle {
     public void move();
     public int getY();
     public int getScore();
-    public void setScore();
+    public void incrementScore();
 }

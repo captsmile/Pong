@@ -33,7 +33,7 @@ public class HumanPaddle implements Paddle, GameConstants {
     }
 
     @Override
-    public void setScore() {
+    public void incrementScore() {
         score++;
     }
 

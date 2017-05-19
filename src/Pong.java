@@ -9,9 +9,13 @@ import java.awt.event.KeyListener;
 public class Pong extends Applet implements Runnable, KeyListener, GameConstants{
 
     private boolean gameStarted;
+    Graphics gfx;
+    Image img;
+
     Thread thread;
     HumanPaddle player1;
-    AIPaddle player2;
+    HumanPaddle player2;
+    //AIPaddle player2;
     Ball ball;
 
     public void init(){
@@ -20,39 +24,45 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
         gameStarted = false;
         ball = new Ball();
         player1 = new HumanPaddle(1);
-        player2 = new AIPaddle(2,ball);
+        player2 = new HumanPaddle(2);
+        img = createImage(GAME_WIDTH,GAME_HEIGHT);
+        gfx = img.getGraphics();
+        //player2 = new AIPaddle(2,ball);
         thread = new Thread(this);
         thread.start();
     }
     public void paint(Graphics g){
         Paddle checkPaddle;
-        g.setColor(Color.black);
-        g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+
+        gfx.setColor(Color.black);
+        gfx.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         checkPaddle = ball.checkPaddleCollision(player1, player2);
         if (checkPaddle != null){
-            checkPaddle.setScore();
-            g.setColor(Color.red);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
+            checkPaddle.incrementScore();
+            gfx.setColor(Color.red);
+            gfx.setFont(new Font("TimesRoman", Font.PLAIN, 22));
             gameStarted = false;
             ball = new Ball();
-            player2.setBall(ball);
-            g.drawString("Game Over", GAME_WIDTH/2,250);
+            //player2.setBall(ball);
+            gfx.drawString("Game Over", GAME_WIDTH/2,250);
         }
         else{
-            player1.draw(g);
-            ball.draw(g);
-            player2.draw(g);
+            player1.draw(gfx);
+            ball.draw(gfx);
+            player2.draw(gfx);
         }
         if (!gameStarted){
-            g.setColor(Color.white);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
-            g.drawString("Tennis", (GAME_WIDTH/2),100);
-            g.drawString("Press Enter to Begin", (GAME_WIDTH/2),130);
+            gfx.setColor(Color.white);
+            gfx.setFont(new Font("TimesRoman", Font.PLAIN, 22));
+            gfx.drawString("Tennis", (GAME_WIDTH/2),100);
+            gfx.drawString("Press Enter to Begin", (GAME_WIDTH/2),130);
         }
-        g.setColor(Color.red);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 22));
-        g.drawString(String.valueOf(player1.getScore()), 50,50);
-        g.drawString(String.valueOf(player2.getScore()), GAME_WIDTH-80,50);
+        gfx.setColor(Color.red);
+        gfx.setFont(new Font("TimesRoman", Font.PLAIN, 22));
+        gfx.drawString(String.valueOf(player1.getScore()), 50,50);
+        gfx.drawString(String.valueOf(player2.getScore()), GAME_WIDTH-80,50);
+
+        g.drawImage(img,0,0,this);
     }
     public void update(Graphics g){
         paint(g);
@@ -88,6 +98,12 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
         else if(e.getKeyCode()== KeyEvent.VK_DOWN){
             player1.setDownAccel(true);
         }
+        else if(e.getKeyCode()== KeyEvent.VK_W){
+            player2.setUpAccel(true);
+        }
+        else if(e.getKeyCode()== KeyEvent.VK_S){
+            player2.setDownAccel(true);
+        }
         else if (e.getKeyCode()== KeyEvent.VK_ENTER){
             gameStarted = true;
         }
@@ -100,6 +116,12 @@ public class Pong extends Applet implements Runnable, KeyListener, GameConstants
         }
         else if(e.getKeyCode()== KeyEvent.VK_DOWN){
             player1.setDownAccel(false);
+        }
+        else if(e.getKeyCode()== KeyEvent.VK_W){
+            player2.setUpAccel(false);
+        }
+        else if(e.getKeyCode()== KeyEvent.VK_S){
+            player2.setDownAccel(false);
         }
     }
 }

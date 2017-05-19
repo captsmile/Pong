@@ -39,7 +39,7 @@ public class Ball implements GameConstants {
                 xVel = -xVel;
             }
             else {
-                return p1;
+                return p2;
             }
         }
         else if (x >= GAME_WIDTH-PADDLE_WIDTH*2-BALL_RADIUS/2){
@@ -47,7 +47,7 @@ public class Ball implements GameConstants {
                 xVel = -xVel;
             }
             else {
-                return p2;
+                return p1;
             }
         }
         return null;
@@ -61,37 +61,11 @@ public class Ball implements GameConstants {
             yVel = -yVel;
 
     }
-    public double getxVel() {
-        return xVel;
-    }
-
-    public void setxVel(double xVel) {
-        this.xVel = xVel;
-    }
-
-    public double getyVel() {
-        return yVel;
-    }
-
-    public void setyVel(double yVel) {
-        this.yVel = yVel;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
 
     public double getY() {
         return y;
     }
 
-    public void setY(double y) {
-        this.y = y;
-    }
 
 
 }
